@@ -50,23 +50,25 @@ class RouletteWheelSelector(Generic[_T]):
             self._fitness_values = fitness_values
         elif isinstance(fitness_values, Sequence):
             self._fitness_values = list(fitness_values)
-        elif isinstance(fitness_values, float):
+        else:
             self._fitness_values = [fitness_values] * len(self._candidates)
 
         # Simple validation
-        assert len(self._fitness_values) == len(self._candidates), "there must be one fitness value for each candidate"
+        assert len(self._fitness_values) == len(self._candidates), (
+            "candidates and fitness values must be of the same length"
+        )
 
-    def update(self, index: int, delta_ratio: float = 1.0) -> None:
+    def update(self, index: int, delta_fitness_value: float = 1.0) -> None:
         """
         Update the fitness value of a candidate at the given index.
 
         Args:
             index:
                 The index of the candidate to update.
-            delta_ratio:
+            delta_fitness_value:
                 The ratio of the delta to add to the fitness value. Defaults to 1.0.
         """
-        self._fitness_values[index] += delta_ratio
+        self._fitness_values[index] += delta_fitness_value
 
     def select(self) -> _T:
         """

@@ -1,9 +1,17 @@
+"""
+Test whether the roulette wheel works correctly.
+
+In order to study the results' distribution, we do not update the fitness values, and the chosen ones should conform to
+the uniform distribution. We use scipy to verify that.
+"""
+
 from collections import Counter
 from collections.abc import Sequence
 
 from scipy.stats import chisquare  # pyright: ignore[reportUnknownVariableType]
 
-from methodkit.picking.roulette_wheel import RouletteWheelSelector
+from methodkit.picking import RouletteWheelSelector
+from methodkit.picking.numpy import NumpyRouletteWheelSelector
 
 # random chosen parameters
 _CANDIDATE_COUNT = 5
@@ -11,17 +19,18 @@ _SELECT_TIMES = 10000
 
 
 def test_roulette_wheel() -> None:
-    """
-    Test whether the roulette wheel works correctly.
-
-    In this case, we do not update the fitness values, and the chosen ones should conform to the uniform
-    distribution. We use scipy to verify the result.
-    """
-    selector = RouletteWheelSelector([None] * _CANDIDATE_COUNT)
+    selector = RouletteWheelSelector([i for i in range(_CANDIDATE_COUNT)])
     values: list[int] = []
     for _ in range(_SELECT_TIMES):
-        index, _ = selector.select_indexed()
-        values.append(index)
+        values.append(selector.select())
+    assert _is_uniform_distribution(values), "the chosen values are not uniformly distributed"
+
+
+def test_numpy_roulette_wheel() -> None:
+    selector = NumpyRouletteWheelSelector([i for i in range(_CANDIDATE_COUNT)])
+    values: list[int] = []
+    for _ in range(_SELECT_TIMES):
+        values.append(selector.select())
     assert _is_uniform_distribution(values), "the chosen values are not uniformly distributed"
 
 

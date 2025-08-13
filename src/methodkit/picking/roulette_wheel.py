@@ -87,7 +87,7 @@ class RouletteWheelSelector(Generic[_T]):
             A tuple of the index and the selected candidate.
         """
         total = sum(self._fitness_values)
-        accumulated_fitness = 0
+        accumulated_fitness = 0.0
         target = random.random()
         for i, fitness in enumerate(self._fitness_values):
             accumulated_fitness += fitness

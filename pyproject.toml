@@ -32,4 +32,4 @@ build-backend = "hatchling.build"
 line-length = 120
 
 [dependency-groups]
-dev = ["scipy>=1.16.1", "scipy-stubs>=1.16.0.2"]
+dev = ["pytest>=8.4.1", "scipy>=1.16.1", "scipy-stubs>=1.16.0.2"]

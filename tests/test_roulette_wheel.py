@@ -1,36 +1,28 @@
-import unittest
 from collections import Counter
 from collections.abc import Sequence
-from typing import ClassVar
 
 from scipy.stats import chisquare  # pyright: ignore[reportUnknownVariableType]
 
 from methodkit.picking.roulette_wheel import RouletteWheelSelector
 
+# random chosen parameters
+_CANDIDATE_COUNT = 5
+_SELECT_TIMES = 10000
 
-class RouletteWheelSelectorTestCase(unittest.TestCase):
-    # Randomly selected numbers
-    _CANDIDATE_COUNT: ClassVar[int] = 5
-    _SELECT_TIMES: ClassVar[int] = 10000
 
-    _selector: RouletteWheelSelector[None]
+def test_roulette_wheel() -> None:
+    """
+    Test whether the roulette wheel works correctly.
 
-    def __init__(self, methodName: str = "runTest") -> None:
-        super().__init__(methodName)
-        self._selector = RouletteWheelSelector([None] * self._CANDIDATE_COUNT)
-
-    def test_roulette_wheel(self) -> None:
-        """
-        Test whether the roulette wheel works correctly.
-
-        In this case, we do not update the fitness values, and the chosen ones should conform to the uniform
-        distribution. We use scipy to verify the result.
-        """
-        values: list[int] = []
-        for _ in range(self._SELECT_TIMES):
-            index, _ = self._selector.select_indexed()
-            values.append(index)
-        self.assertTrue(_is_uniform_distribution(values))
+    In this case, we do not update the fitness values, and the chosen ones should conform to the uniform
+    distribution. We use scipy to verify the result.
+    """
+    selector = RouletteWheelSelector([None] * _CANDIDATE_COUNT)
+    values: list[int] = []
+    for _ in range(_SELECT_TIMES):
+        index, _ = selector.select_indexed()
+        values.append(index)
+    assert _is_uniform_distribution(values), "the chosen values are not uniformly distributed"
 
 
 def _is_uniform_distribution(values: Sequence[int]) -> bool:

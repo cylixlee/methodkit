@@ -1,6 +1,6 @@
 [project]
 name = "methodkit"
-version = "0.1.0"
+version = "0.2.0"
 description = "Collection of useful methods and algorithms."
 readme = "README.md"
 authors = [{ name = "Cylix Lee", email = "cylix.lee@outlook.com" }]

@@ -1,13 +1,14 @@
-# MethodKit
+# Method Kit
 
-![Status](https://img.shields.io/badge/status-work_in_progress-yellow?style=flat-square)
+![Status](https://img.shields.io/badge/Status-Work_In_Progress-yellow?style=flat-square)
+![PR](https://img.shields.io/badge/Pull_Requests-Open-green?style=flat-square)
 
 
 A Python package containing useful methods and algorithms.
 
 > **Note**
 >
-> This package is still under development and does not guarantee a stable API.
+> This package is still under development and does not guarantee a stable API. Pull Requests are welcome.
 
 ## Motivation
 
